@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Inter, Poppins } from "next/font/google";
 import { GADS, HERO } from "./lib/site";
+import ContactTracker from "./components/ContactTracker";
 import "./globals.css";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
@@ -20,9 +21,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" className={`${inter.variable} ${poppins.variable} h-full antialiased`}>
       <body className="min-h-full font-sans">
         {children}
+        <ContactTracker />
         <Script src={`https://www.googletagmanager.com/gtag/js?id=${GADS.id}`} strategy="afterInteractive" />
         <Script id="gtag-init" strategy="afterInteractive">
-          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','${GADS.id}');`}
+          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','${GADS.id}',{allow_enhanced_conversions:true});`}
         </Script>
       </body>
     </html>

@@ -60,6 +60,8 @@ export default function LeadForm({ course, id = "lead-form" }: { course: CourseK
       });
       if (!res.ok) throw new Error("bad status");
       setStatus("done");
+      // Enhanced conversions: Google hashes the phone number in the browser before sending it.
+      window.gtag?.("set", "user_data", { phone_number: `+91${phone}` });
       window.gtag?.("event", "conversion", { send_to: `${GADS.id}/${GADS.leadLabel}` });
     } catch {
       setStatus("error");

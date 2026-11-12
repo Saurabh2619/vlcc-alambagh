@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { COURSES, FAQS, HERO, SITE, type CourseKey } from "@/app/lib/site";
+import { COURSE_PAGE, COURSES, HERO, SITE, type CourseKey } from "@/app/lib/site";
 import LeadForm from "./LeadForm";
 import {
   AwardIcon,
@@ -45,6 +45,7 @@ const WHY = [
 
 export default function Landing({ course }: { course: CourseKey }) {
   const hero = HERO[course];
+  const page = COURSE_PAGE[course];
   const heroArtKey = course === "brand" ? "makeup" : course;
   const HeroArt = COURSE_ART[heroArtKey];
   const ordered = [...COURSES].sort((a, b) => (a.key === course ? -1 : b.key === course ? 1 : 0));
@@ -53,10 +54,11 @@ export default function Landing({ course }: { course: CourseKey }) {
     <div className="flex min-h-full flex-col">
       {/* Authorised centre strip */}
       <div className="bg-navy text-white">
-        <div className="mx-auto flex max-w-6xl items-center justify-center gap-2 px-4 py-2 text-center text-xs font-medium sm:justify-between sm:text-sm">
+        <div className="mx-auto flex max-w-6xl items-center justify-center gap-2 px-4 py-1.5 text-center text-xs font-medium sm:py-2 sm:justify-between sm:text-sm">
           <span className="flex items-center gap-2">
             <AwardIcon className="h-4 w-4 shrink-0 text-orange-light" />
-            Authorised VLCC School of Beauty centre, Alambagh, Lucknow
+            <span className="sm:hidden">Authorised VLCC centre, Alambagh</span>
+            <span className="hidden sm:inline">Authorised VLCC School of Beauty centre, Alambagh, Lucknow</span>
           </span>
           <span className="hidden sm:inline">Admissions open · Enquire for upcoming batches</span>
         </div>
@@ -64,13 +66,13 @@ export default function Landing({ course }: { course: CourseKey }) {
 
       {/* Top bar */}
       <header className="sticky top-0 z-20 border-b border-line bg-white/95 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-2 md:py-3">
           <a href="#top" aria-label="VLCC School of Beauty, Alambagh Lucknow" className="shrink-0">
-            <Image src="/vlcc-logo-lko.webp" alt="VLCC School of Beauty, Alambagh Lucknow" width={200} height={83} priority className="h-12 w-auto md:h-14" />
+            <Image src="/vlcc-logo-lko.webp" alt="VLCC School of Beauty, Alambagh Lucknow" width={200} height={83} priority className="h-10 w-auto md:h-14" />
           </a>
           <a
             href={`tel:+91${SITE.phone}`}
-            className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-orange px-4 font-semibold text-white hover:bg-orange-dark"
+            className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-orange px-3 text-sm font-semibold text-white hover:bg-orange-dark md:px-4 md:text-base"
           >
             <PhoneIcon className="h-5 w-5" />
             <span className="hidden sm:inline">Call</span> {SITE.phone.replace(/(\d{5})(\d{5})/, "$1 $2")}
@@ -84,14 +86,14 @@ export default function Landing({ course }: { course: CourseKey }) {
           <section className="relative isolate overflow-hidden bg-ink">
             <Image src={hero.image} alt="" fill priority sizes="100vw" className="-z-20 object-cover" />
             <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-r from-ink/90 via-ink/75 to-ink/40" />
-            <div className="mx-auto grid max-w-6xl items-center gap-8 px-4 py-12 md:grid-cols-[1.15fr_1fr] md:py-20">
-              <div className="flex flex-col gap-5 text-white">
-                <span className="self-start rounded-full bg-white/15 px-3 py-1.5 text-sm font-semibold backdrop-blur">
+            <div className="mx-auto grid max-w-6xl items-center gap-5 px-4 py-6 md:grid-cols-[1.15fr_1fr] md:gap-8 md:py-20">
+              <div className="flex flex-col gap-3 text-white md:gap-5">
+                <span className="self-start rounded-full bg-white/15 px-3 py-1 text-xs font-semibold backdrop-blur md:py-1.5 md:text-sm">
                   {SITE.centre} · Opposite Phoenix Mall
                 </span>
-                <h1 className="font-heading text-3xl leading-tight font-bold md:text-5xl">{hero.h1}</h1>
-                <p className="text-lg leading-relaxed text-white/90">{hero.sub}</p>
-                <ul className="flex flex-col gap-2.5">
+                <h1 className="font-heading text-[26px] leading-tight font-bold md:text-5xl">{hero.h1}</h1>
+                <p className="text-base leading-relaxed text-white/90 md:text-lg">{hero.sub}</p>
+                <ul className="hidden flex-col gap-2.5 md:flex">
                   {["Practical training on real models", "Certificate on completion", "Weekday and weekend batches"].map((t) => (
                     <li key={t} className="flex items-center gap-2.5 font-medium">
                       <CheckIcon className="h-5 w-5 shrink-0 text-orange-light" />
@@ -100,23 +102,23 @@ export default function Landing({ course }: { course: CourseKey }) {
                   ))}
                 </ul>
               </div>
-              <div className="rounded-3xl bg-white p-6 shadow-[0_12px_32px_rgba(0,0,0,0.25)] md:p-7">
+              <div className="rounded-3xl bg-white p-5 shadow-[0_12px_32px_rgba(0,0,0,0.25)] md:p-7">
                 <h2 className="font-heading text-xl font-semibold text-navy">Get course details and fees</h2>
-                <p className="mt-1 mb-5 text-sm text-ink-soft">Our counsellor will call you back, 9 AM to 9 PM.</p>
+                <p className="mt-1 mb-4 text-sm text-ink-soft md:mb-5">Our counsellor will call you back, 9 AM to 9 PM.</p>
                 <LeadForm course={course} />
               </div>
             </div>
           </section>
         ) : (
           <section className="bg-cream">
-            <div className="mx-auto grid max-w-6xl items-start gap-8 px-4 py-10 md:grid-cols-[1.15fr_1fr] md:py-16">
-              <div className="flex flex-col gap-5">
-                <span className="self-start rounded-full bg-navy-soft px-3 py-1.5 text-sm font-semibold text-navy">
+            <div className="mx-auto grid max-w-6xl items-start gap-5 px-4 py-6 md:grid-cols-[1.15fr_1fr] md:gap-8 md:py-16">
+              <div className="flex flex-col gap-3 md:gap-5">
+                <span className="self-start rounded-full bg-navy-soft px-3 py-1 text-xs font-semibold text-navy md:py-1.5 md:text-sm">
                   {SITE.centre} · Opposite Phoenix Mall
                 </span>
-                <h1 className="font-heading text-3xl leading-tight font-bold text-navy md:text-5xl">{hero.h1}</h1>
-                <p className="text-lg leading-relaxed text-ink-soft">{hero.sub}</p>
-                <ul className="flex flex-col gap-2.5">
+                <h1 className="font-heading text-[26px] leading-tight font-bold text-navy md:text-5xl">{hero.h1}</h1>
+                <p className="text-base leading-relaxed text-ink-soft md:text-lg">{hero.sub}</p>
+                <ul className="hidden flex-col gap-2.5 md:flex">
                   {["Practical training on real models", "Certificate on completion", "Weekday and weekend batches"].map((t) => (
                     <li key={t} className="flex items-center gap-2.5 font-medium">
                       <CheckIcon className="h-5 w-5 shrink-0 text-green" />
@@ -128,9 +130,9 @@ export default function Landing({ course }: { course: CourseKey }) {
                   <HeroArt className="h-44 w-44" />
                 </div>
               </div>
-              <div className="rounded-3xl bg-white p-6 shadow-[0_12px_32px_rgba(0,71,133,0.14)] md:p-7">
+              <div className="rounded-3xl bg-white p-5 shadow-[0_12px_32px_rgba(0,71,133,0.14)] md:p-7">
                 <h2 className="font-heading text-xl font-semibold text-navy">Get course details and fees</h2>
-                <p className="mt-1 mb-5 text-sm text-ink-soft">Our counsellor will call you back, 9 AM to 9 PM.</p>
+                <p className="mt-1 mb-4 text-sm text-ink-soft md:mb-5">Our counsellor will call you back, 9 AM to 9 PM.</p>
                 <LeadForm course={course} />
               </div>
             </div>
@@ -149,6 +151,33 @@ export default function Landing({ course }: { course: CourseKey }) {
                 </div>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* About (keyword-relevant copy for Quality Score) */}
+        <section>
+          <div className="mx-auto grid max-w-6xl gap-8 px-4 py-14 md:grid-cols-[1.4fr_1fr] md:items-center">
+            <div>
+              <p className="text-sm font-semibold tracking-widest text-orange uppercase">About the course</p>
+              <h2 className="mt-1 font-heading text-2xl font-bold text-navy md:text-3xl">
+                {page.label.charAt(0).toUpperCase() + page.label.slice(1)} at VLCC Alambagh, Lucknow
+              </h2>
+              <div className="mt-4 flex flex-col gap-3 text-lg leading-relaxed text-ink-soft">
+                {page.about.map((t) => (
+                  <p key={t}>{t}</p>
+                ))}
+              </div>
+            </div>
+            <div className="flex flex-col gap-3 rounded-3xl bg-navy p-7 text-white">
+              <p className="font-heading text-xl font-semibold">Get fees and batch details</p>
+              <p className="text-white/80">Talk to our counsellor today. No obligation.</p>
+              <a href="#lead-form" className="inline-flex min-h-12 items-center justify-center rounded-xl bg-orange px-5 font-bold text-white hover:bg-orange-dark">
+                Get a callback
+              </a>
+              <a href={`tel:+91${SITE.phone}`} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border-2 border-white/40 px-5 font-semibold text-white hover:bg-white/10">
+                <PhoneIcon className="h-5 w-5" /> Call {SITE.phone}
+              </a>
+            </div>
           </div>
         </section>
 
@@ -286,10 +315,15 @@ export default function Landing({ course }: { course: CourseKey }) {
                 </a>
               </div>
             </div>
-            <div className="flex min-h-56 flex-col items-center justify-center gap-3 rounded-3xl bg-white p-6 text-center text-navy">
-              <PinIcon className="h-12 w-12 text-orange" />
-              <p className="font-heading text-lg font-semibold">Alambagh, Lucknow</p>
-              <p className="text-ink-soft">Right opposite Phoenix Mall</p>
+            <div className="overflow-hidden rounded-3xl border border-line bg-white shadow-[0_12px_32px_rgba(0,71,133,0.10)]">
+              <iframe
+                src={SITE.mapsEmbed}
+                title="VLCC School of Beauty, Alambagh, Lucknow on Google Maps"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="block h-64 w-full border-0 md:h-full md:min-h-72"
+                allowFullScreen
+              />
             </div>
           </div>
         </section>
@@ -300,7 +334,7 @@ export default function Landing({ course }: { course: CourseKey }) {
             <p className="text-sm font-semibold tracking-widest text-orange uppercase">FAQ</p>
             <h2 className="mt-1 font-heading text-2xl font-bold text-navy md:text-3xl">Common questions</h2>
             <div className="mt-6 flex flex-col gap-3">
-              {FAQS.map((f, i) => (
+              {page.faqs.map((f, i) => (
                 <details key={f.q} open={i === 0} className="group rounded-2xl border border-line bg-white">
                   <summary className="flex min-h-13 cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 font-semibold">
                     {f.q}
@@ -324,7 +358,7 @@ export default function Landing({ course }: { course: CourseKey }) {
         </section>
       </main>
 
-      <footer className="bg-ink pb-24 text-white/75 md:pb-0">
+      <footer className="bg-ink text-white/75">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 text-sm md:grid-cols-3">
           <div className="flex flex-col gap-3">
             <div className="self-start rounded-lg bg-white px-3 py-2">
@@ -350,24 +384,15 @@ export default function Landing({ course }: { course: CourseKey }) {
         <div className="border-t border-white/10 py-4 text-center text-xs">© {SITE.brand}, {SITE.centre}</div>
       </footer>
 
-      {/* Desktop floating WhatsApp */}
+      {/* Floating WhatsApp (mobile + desktop) */}
       <a
         href={`https://wa.me/91${SITE.whatsapp}`}
         aria-label="Chat on WhatsApp"
-        className="fixed right-6 bottom-6 z-30 hidden h-14 w-14 items-center justify-center rounded-full bg-green text-white shadow-lg transition hover:scale-105 md:flex"
+        className="fixed right-4 bottom-4 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_6px_20px_rgba(37,211,102,0.45)] transition hover:scale-105 md:right-6 md:bottom-6 md:h-16 md:w-16"
       >
-        <WhatsAppIcon className="h-7 w-7" />
+        <WhatsAppIcon className="h-8 w-8 md:h-9 md:w-9" />
       </a>
 
-      {/* Mobile sticky action bar */}
-      <div className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-2 gap-2 border-t border-line bg-white p-2 md:hidden">
-        <a href={`tel:+91${SITE.phone}`} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-orange font-semibold text-white">
-          <PhoneIcon className="h-5 w-5" /> Call
-        </a>
-        <a href={`https://wa.me/91${SITE.whatsapp}`} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-green font-semibold text-white">
-          <WhatsAppIcon className="h-5 w-5" /> WhatsApp
-        </a>
-      </div>
     </div>
   );
 }

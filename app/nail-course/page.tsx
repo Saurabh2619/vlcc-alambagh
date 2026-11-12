@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Landing from "../components/Landing";
-import { HERO } from "../lib/site";
+import { COURSE_PAGE, HERO } from "../lib/site";
 
-export const metadata: Metadata = { title: HERO.nail.title };
+export const metadata: Metadata = { title: HERO.nail.title, description: COURSE_PAGE.nail.desc };
 
 export default function Page() {
   return <Landing course="nail" />;
