@@ -19,11 +19,9 @@ export async function POST(request: Request) {
   const name = clip(body.name, 80);
   const phone = clip(body.phone, 10);
   const course = COURSES.has(String(body.course)) ? String(body.course) : "brand";
-  const elapsed = Number(body.elapsed) || 0;
-
-  // Bots: honeypot filled, or form submitted faster than a person could type.
-  // Answer "ok" so the bot does not retry, but do not save it.
-  if (clip(body.website) !== "" || (elapsed > 0 && elapsed < 2500)) {
+  // Bots: hidden honeypot field filled. Answer "ok" so the bot does not retry, but do not save it.
+  // (No minimum-time check: phone autofill lets real people submit in under a second.)
+  if (clip(body.website) !== "") {
     return Response.json({ ok: true });
   }
 
