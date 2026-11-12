@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# VLCC School of Beauty, Alambagh: ads landing page
 
-## Getting Started
+One landing page with a version per Google Ads ad group. Leads go to a Google Sheet; the Google Ads "Website lead" conversion fires only after a lead is saved.
 
-First, run the development server:
+## Pages (Final URLs for Google Ads)
+
+| Ad group | URL |
+|---|---|
+| LKO - Makeup Course | `/makeup-course` |
+| LKO - Beautician Parlour | `/beautician-course` |
+| LKO - Hairstyling Course | `/hair-course` |
+| LKO - Nail Course | `/nail-course` |
+| LKO - VLCC Brand Academy | `/` |
+| (required by Google) | `/privacy` |
+
+## Edit content
+
+Everything editable is in `app/lib/site.ts`: phone, WhatsApp, address, timing, certificate name, course list, fees, duration, headings and FAQs. Empty `fees` / `duration` show "Ask on call".
+
+## Run locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local   # then fill LEADS_WEBHOOK_URL and LEADS_SECRET
+npm run dev                  # open http://localhost:3000/makeup-course
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Google Sheet for leads
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Follow the steps at the top of `apps-script/Code.gs`. The sheet gets columns for Status, Remarks and Admission so the team can mark lead quality.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Junk protection (no OTP)
 
-## Learn More
+- 10 digit Indian mobile only (starts 6-9), obvious fake numbers blocked
+- Hidden honeypot field and a minimum fill time stop bots
+- Same number saved only once per 24 hours (in the Apps Script)
 
-To learn more about Next.js, take a look at the following resources:
+## Deploy
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Push to GitHub.
+2. Vercel > Add New Project > import the repo.
+3. Settings > Environment Variables: `LEADS_WEBHOOK_URL`, `LEADS_SECRET`.
+4. Deploy. When the subdomain is ready, add it under Settings > Domains.
