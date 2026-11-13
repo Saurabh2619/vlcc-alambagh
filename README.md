@@ -15,7 +15,7 @@ One landing page with a version per Google Ads ad group. Leads go to a Google Sh
 
 ## Edit content
 
-Everything editable is in `app/lib/site.ts`: phone, WhatsApp, address, timing, certificate name, course list, fees, duration, headings and FAQs. Empty `fees` / `duration` show "Ask on call".
+Everything editable is in `app/lib/site.ts`: phone, WhatsApp, address, timing, certificate name, course list, fees, duration, headings, FAQs and photo lists (`WORK`, `CENTRE_PHOTO`). Student work photos live in `public/work/<course>/`. Empty `fees` / `duration` show "Ask on call".
 
 ## Run locally
 
@@ -27,12 +27,12 @@ npm run dev                  # open http://localhost:3000/makeup-course
 
 ## Google Sheet for leads
 
-Follow the steps at the top of `apps-script/Code.gs`. The sheet gets columns for Status, Remarks and Admission so the team can mark lead quality.
+Follow the steps at the top of `apps-script/Code.gs`. Columns: Time, Name, Phone, Course, Keyword, GCLID, Status. The team updates Status for each lead.
 
 ## Junk protection (no OTP)
 
 - 10 digit Indian mobile only (starts 6-9), obvious fake numbers blocked
-- Hidden honeypot field and a minimum fill time stop bots
+- Hidden honeypot field stops bots
 - Same number saved only once per 24 hours (in the Apps Script)
 
 ## Deploy

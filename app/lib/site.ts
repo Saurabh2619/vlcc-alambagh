@@ -19,7 +19,7 @@ export const GADS = {
   id: process.env.NEXT_PUBLIC_GADS_ID || "AW-17048613645",
   leadLabel: process.env.NEXT_PUBLIC_GADS_LEAD_LABEL || "o5OfCMKd0-QaEI3mtME_",
   // Optional: label of a "Contact click" conversion (calls + WhatsApp taps). Empty = not tracked.
-  contactLabel: process.env.NEXT_PUBLIC_GADS_CONTACT_LABEL || "",
+  contactLabel: process.env.NEXT_PUBLIC_GADS_CONTACT_LABEL || "QR4cCMK7x7cdEI3mtME_",
 };
 
 export type CourseKey = "makeup" | "parlour" | "hair" | "nail" | "brand";
@@ -99,29 +99,6 @@ export const HERO: Record<CourseKey, { h1: string; sub: string; title: string; i
     title: "VLCC School of Beauty Alambagh, Lucknow | Beauty Courses",
   },
 };
-
-export const FAQS: { q: string; a: string }[] = [
-  {
-    q: "What is the fee for the course?",
-    a: "Fees depend on the course and level. Our counsellor shares the full fee structure and any current offer on the call.",
-  },
-  {
-    q: "How long are the courses?",
-    a: "Short and professional courses are available. Duration depends on the course you choose; the counsellor will guide you.",
-  },
-  {
-    q: "Will I get a certificate?",
-    a: "Yes, you get a certificate after completing the course.",
-  },
-  {
-    q: "Do I need any experience?",
-    a: "No. Courses start from the basics, so beginners can join.",
-  },
-  {
-    q: "Can I visit the centre before joining?",
-    a: "Yes. Fill the form or call us, and we will fix a time for you to visit our Alambagh centre.",
-  },
-];
 
 // Course-specific content: matches what people search on Google (better Quality Score, cheaper clicks).
 // TODO: replace "Ask our counsellor" answers with real fees/duration once confirmed.
@@ -212,3 +189,27 @@ export const COURSE_PAGE: Record<
     ],
   },
 };
+
+// Real photos of student work at VLCC Alambagh (processed copies live in public/work/<course>/).
+// To add more: put the new photo in public/work/<course>/ and add its path here.
+export const WORK: Record<Exclude<CourseKey, "brand">, string[]> = {
+  makeup: [8, 9, 4, 6, 7, 5, 1, 2, 3].map((n) => `/work/makeup/makeup-${n}.jpg`),
+  hair: [6, 2, 7, 5, 1, 3, 4].map((n) => `/work/hair/hair-${n}.jpg`),
+  nail: [6, 1, 7, 3, 4, 2, 5].map((n) => `/work/nail/nail-${n}.jpg`),
+  parlour: [], // TODO: add facial / parlour photos when received
+};
+
+// Real photo of the Alambagh centre (faculty and students)
+export const CENTRE_PHOTO = "/centre/classroom.jpg";
+
+export function workFor(course: CourseKey): { src: string; course: string }[] {
+  const names = { makeup: "Makeup", hair: "Hair styling", nail: "Nail art", parlour: "Beautician" } as const;
+  if (course !== "brand") return WORK[course].map((src) => ({ src, course: names[course] }));
+  // Brand page: a mix from every course
+  const mix: { src: string; course: string }[] = [];
+  const keys = (["makeup", "hair", "nail", "parlour"] as const).filter((k) => WORK[k].length);
+  for (let i = 0; mix.length < 9 && i < 5; i++) {
+    for (const k of keys) if (WORK[k][i] && mix.length < 9) mix.push({ src: WORK[k][i], course: names[k] });
+  }
+  return mix;
+}

@@ -6,6 +6,11 @@ const nextConfig: NextConfig = {
     agentFeedback: true,
   },
   cacheComponents: true,
+  // Smaller photos: serve AVIF/WebP and let browsers cache them for a year
+  images: {
+    formats: ["image/avif", "image/webp"],
+    minimumCacheTTL: 31536000,
+  },
   partialPrefetching: true,
   turbopack: {
     rules: {

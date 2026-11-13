@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { COURSE_PAGE, COURSES, HERO, SITE, type CourseKey } from "@/app/lib/site";
+import { CENTRE_PHOTO, COURSE_PAGE, COURSES, HERO, SITE, WORK, workFor, type CourseKey } from "@/app/lib/site";
 import LeadForm from "./LeadForm";
 import {
   AwardIcon,
@@ -46,6 +46,7 @@ const WHY = [
 export default function Landing({ course }: { course: CourseKey }) {
   const hero = HERO[course];
   const page = COURSE_PAGE[course];
+  const work = workFor(course);
   const heroArtKey = course === "brand" ? "makeup" : course;
   const HeroArt = COURSE_ART[heroArtKey];
   const ordered = [...COURSES].sort((a, b) => (a.key === course ? -1 : b.key === course ? 1 : 0));
@@ -101,6 +102,16 @@ export default function Landing({ course }: { course: CourseKey }) {
                     </li>
                   ))}
                 </ul>
+                {work.length > 0 && (
+                  <div className="mt-2 hidden flex-col gap-2 md:flex">
+                    <p className="text-sm font-semibold text-white/80">Real work by our students</p>
+                    <div className="flex gap-3">
+                      {work.slice(0, 3).map((w) => (
+                        <Image key={w.src} src={w.src} alt={`${w.course} work by a student at VLCC Alambagh`} width={112} height={140} className="h-36 w-28 rounded-xl object-cover ring-2 ring-white/70" />
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
               <div className="rounded-3xl bg-white p-5 shadow-[0_12px_32px_rgba(0,0,0,0.25)] md:p-7">
                 <h2 className="font-heading text-xl font-semibold text-navy">Get course details and fees</h2>
@@ -126,9 +137,20 @@ export default function Landing({ course }: { course: CourseKey }) {
                     </li>
                   ))}
                 </ul>
-                <div className="hidden items-center justify-center rounded-3xl bg-white/70 p-6 text-orange md:flex">
-                  <HeroArt className="h-44 w-44" />
-                </div>
+                {work.length >= 4 ? (
+                  <div className="hidden grid-cols-4 gap-3 md:grid">
+                    {work.slice(0, 4).map((w) => (
+                      <figure key={w.src} className="relative overflow-hidden rounded-2xl">
+                        <Image src={w.src} alt={`${w.course} work by a student at VLCC Alambagh`} width={200} height={250} className="aspect-[4/5] h-auto w-full object-cover" />
+                        <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-2 pt-6 pb-1.5 text-xs font-semibold text-white">{w.course}</figcaption>
+                      </figure>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="hidden items-center justify-center rounded-3xl bg-white/70 p-6 text-orange md:flex">
+                    <HeroArt className="h-44 w-44" />
+                  </div>
+                )}
               </div>
               <div className="rounded-3xl bg-white p-5 shadow-[0_12px_32px_rgba(0,71,133,0.14)] md:p-7">
                 <h2 className="font-heading text-xl font-semibold text-navy">Get course details and fees</h2>
@@ -168,7 +190,18 @@ export default function Landing({ course }: { course: CourseKey }) {
                 ))}
               </div>
             </div>
-            <div className="flex flex-col gap-3 rounded-3xl bg-navy p-7 text-white">
+            <div className="flex flex-col gap-3 overflow-hidden rounded-3xl bg-navy p-7 text-white">
+              <figure className="mb-2">
+                <Image
+                  src={CENTRE_PHOTO}
+                  alt="Faculty and students at VLCC School of Beauty, Alambagh, Lucknow"
+                  width={1024}
+                  height={682}
+                  sizes="(min-width: 768px) 420px, 100vw"
+                  className="aspect-[3/2] h-auto w-full rounded-2xl object-cover"
+                />
+                <figcaption className="pt-3 text-sm text-white/75">Our faculty and students at the Alambagh centre</figcaption>
+              </figure>
               <p className="font-heading text-xl font-semibold">Get fees and batch details</p>
               <p className="text-white/80">Talk to our counsellor today. No obligation.</p>
               <a href="#lead-form" className="inline-flex min-h-12 items-center justify-center rounded-xl bg-orange px-5 font-bold text-white hover:bg-orange-dark">
@@ -181,6 +214,41 @@ export default function Landing({ course }: { course: CourseKey }) {
           </div>
         </section>
 
+        {/* Student work gallery (real photos) */}
+        {work.length > 0 && (
+          <section className="bg-cream">
+            <div className="mx-auto max-w-6xl px-4 py-14">
+              <p className="text-sm font-semibold tracking-widest text-orange uppercase">Student work</p>
+              <h2 className="mt-1 font-heading text-2xl font-bold text-navy md:text-3xl">
+                Real work by our students at VLCC Alambagh
+              </h2>
+              <p className="mt-2 text-ink-soft">Every look below was created by students in our classes.</p>
+              <div className="marquee -mx-4 mt-6 overflow-hidden md:mx-0">
+                <div className="marquee-track flex w-max gap-3">
+                  {[...work, ...work].map((w, i) => (
+                    <figure key={`${w.src}-${i}`} aria-hidden={i >= work.length} className="relative w-36 shrink-0 overflow-hidden rounded-xl md:w-44">
+                      <Image
+                        src={w.src}
+                        alt={i < work.length ? `${w.course} work by a student at VLCC Alambagh, Lucknow` : ""}
+                        width={176}
+                        height={220}
+                        sizes="176px"
+                        className="aspect-[4/5] h-auto w-full object-cover"
+                      />
+                      <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-2.5 pt-6 pb-1.5 text-xs font-semibold text-white">
+                        {w.course}
+                      </figcaption>
+                    </figure>
+                  ))}
+                </div>
+              </div>
+              <a href="#lead-form" className="mt-8 inline-flex min-h-12 items-center rounded-xl bg-orange px-6 font-bold text-white hover:bg-orange-dark">
+                Learn this at VLCC Alambagh
+              </a>
+            </div>
+          </section>
+        )}
+
         {/* Courses */}
         <section id="courses">
           <div className="mx-auto max-w-6xl px-4 py-14">
@@ -191,9 +259,13 @@ export default function Landing({ course }: { course: CourseKey }) {
                 const Art = COURSE_ART[c.key];
                 return (
                   <article key={c.key} className="flex flex-col overflow-hidden rounded-2xl border border-line bg-white transition duration-200 hover:-translate-y-1 hover:shadow-[0_14px_30px_rgba(0,71,133,0.12)]">
-                    <div className="flex h-36 items-center justify-center bg-cream text-orange">
-                      <Art className="h-24 w-24" />
-                    </div>
+                    {WORK[c.key][0] ? (
+                      <Image src={WORK[c.key][0]} alt={`${c.name} work by a student at VLCC Alambagh`} width={400} height={300} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" className="aspect-square h-auto w-full object-cover object-top" />
+                    ) : (
+                      <div className="flex aspect-square items-center justify-center bg-cream text-orange">
+                        <Art className="h-24 w-24" />
+                      </div>
+                    )}
                     <div className="flex flex-1 flex-col gap-3 p-5">
                       <h3 className="font-heading text-lg font-semibold text-navy">{c.name}</h3>
                       <p className="text-sm leading-relaxed text-ink-soft">{c.short}</p>
