@@ -6,6 +6,8 @@ export const SITE = {
   phone: "7755009597", // TODO: confirm call number
   whatsapp: "7755009597", // TODO: confirm WhatsApp number
   address: "B3-B6, opposite Phoenix Mall, Alambagh, Lucknow", // TODO: confirm full address with pin code
+  instagram: "https://www.instagram.com/vlccschoolofbeautyalambagh",
+  instagramHandle: "@vlccschoolofbeautyalambagh",
   mapsUrl: "https://www.google.com/maps/search/?api=1&query=VLCC+School+of+Beauty+Alambagh+Lucknow",
   // Map shown on the page. TODO: if the pin is not exactly on the institute, replace with the embed link
   // from Google Maps > the institute listing > Share > Embed a map > copy the src="..." URL.
@@ -194,13 +196,14 @@ export const COURSE_PAGE: Record<
 // To add more: put the new photo in public/work/<course>/ and add its path here.
 export const WORK: Record<Exclude<CourseKey, "brand">, string[]> = {
   makeup: [8, 9, 4, 6, 7, 5, 1, 2, 3].map((n) => `/work/makeup/makeup-${n}.jpg`),
-  hair: [6, 2, 7, 5, 1, 3, 4].map((n) => `/work/hair/hair-${n}.jpg`),
+  hair: [6, 2, 7, 5, 1, 3, 4, 8].map((n) => `/work/hair/hair-${n}.jpg`),
   nail: [6, 1, 7, 3, 4, 2, 5].map((n) => `/work/nail/nail-${n}.jpg`),
-  parlour: [], // TODO: add facial / parlour photos when received
+  parlour: [1, 2, 3, 4, 5].map((n) => `/work/parlour/parlour-${n}.jpg`),
 };
 
 // Real photo of the Alambagh centre (faculty and students)
 export const CENTRE_PHOTO = "/centre/classroom.jpg";
+export const CENTRE_ENTRANCE = "/centre/entrance.jpg";
 
 export function workFor(course: CourseKey): { src: string; course: string }[] {
   const names = { makeup: "Makeup", hair: "Hair styling", nail: "Nail art", parlour: "Beautician" } as const;

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { CENTRE_PHOTO, COURSE_PAGE, COURSES, HERO, SITE, WORK, workFor, type CourseKey } from "@/app/lib/site";
+import { CENTRE_ENTRANCE, CENTRE_PHOTO, COURSE_PAGE, COURSES, HERO, SITE, WORK, workFor, type CourseKey } from "@/app/lib/site";
 import LeadForm from "./LeadForm";
 import {
   AwardIcon,
@@ -12,6 +12,7 @@ import {
   PinIcon,
   SparkIcon,
   UsersIcon,
+  InstagramIcon,
   WhatsAppIcon,
 } from "./Icons";
 
@@ -220,9 +221,13 @@ export default function Landing({ course }: { course: CourseKey }) {
             <div className="mx-auto max-w-6xl px-4 py-14">
               <p className="text-sm font-semibold tracking-widest text-orange uppercase">Student work</p>
               <h2 className="mt-1 font-heading text-2xl font-bold text-navy md:text-3xl">
-                Real work by our students at VLCC Alambagh
+                {course === "parlour" ? "Inside our beautician classes at VLCC Alambagh" : "Real work by our students at VLCC Alambagh"}
               </h2>
-              <p className="mt-2 text-ink-soft">Every look below was created by students in our classes.</p>
+              <p className="mt-2 text-ink-soft">
+                {course === "parlour"
+                  ? "Students practise every service on real models, guided by our trainers."
+                  : "Every look below was created by students in our classes."}
+              </p>
               <div className="marquee -mx-4 mt-6 overflow-hidden md:mx-0">
                 <div className="marquee-track flex w-max gap-3">
                   {[...work, ...work].map((w, i) => (
@@ -244,6 +249,14 @@ export default function Landing({ course }: { course: CourseKey }) {
               </div>
               <a href="#lead-form" className="mt-8 inline-flex min-h-12 items-center rounded-xl bg-orange px-6 font-bold text-white hover:bg-orange-dark">
                 Learn this at VLCC Alambagh
+              </a>
+              <a
+                href={SITE.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 inline-flex min-h-12 sm:mt-8 sm:ml-3 items-center gap-2 rounded-xl border-2 border-navy px-5 font-semibold text-navy hover:bg-navy hover:text-white"
+              >
+                <InstagramIcon className="h-5 w-5" /> More on Instagram
               </a>
             </div>
           </section>
@@ -386,6 +399,20 @@ export default function Landing({ course }: { course: CourseKey }) {
                   <PinIcon className="h-5 w-5" /> Directions
                 </a>
               </div>
+              <figure className="mt-2 flex items-center gap-4">
+                <Image
+                  src={CENTRE_ENTRANCE}
+                  alt="Entrance of VLCC School of Beauty, Alambagh, Lucknow"
+                  width={450}
+                  height={800}
+                  sizes="128px"
+                  className="h-44 w-28 rounded-2xl object-cover md:h-52 md:w-32"
+                />
+                <figcaption className="text-ink-soft">
+                  <span className="block font-heading font-semibold text-navy">Look for this entrance</span>
+                  Our centre is opposite Phoenix Mall, Alambagh. Come and see our classes in person.
+                </figcaption>
+              </figure>
             </div>
             <div className="overflow-hidden rounded-3xl border border-line bg-white shadow-[0_12px_32px_rgba(0,71,133,0.10)]">
               <iframe
@@ -450,6 +477,9 @@ export default function Landing({ course }: { course: CourseKey }) {
             <p className="font-heading font-semibold text-white">Contact</p>
             <p>{SITE.address}</p>
             <a href={`tel:+91${SITE.phone}`} className="hover:text-white">+91 {SITE.phone}</a>
+            <a href={SITE.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white">
+              <InstagramIcon className="h-4 w-4" /> {SITE.instagramHandle}
+            </a>
             <Link href="/privacy" className="underline hover:text-white">Privacy policy</Link>
           </div>
         </div>

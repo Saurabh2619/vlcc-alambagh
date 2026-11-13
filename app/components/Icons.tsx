@@ -25,6 +25,16 @@ export function WhatsAppIcon({ className }: P) {
   );
 }
 
+export function InstagramIcon({ className }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" />
+      <circle cx="12" cy="12" r="4.25" />
+      <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
 export function CheckIcon({ className }: P) {
   return (
     <svg viewBox="0 0 24 24" className={className} {...base} strokeWidth={2.4}>
