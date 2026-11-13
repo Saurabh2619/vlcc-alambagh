@@ -22,7 +22,7 @@ export default function Privacy() {
       <h2 className="mt-8 font-heading text-xl font-semibold text-navy">Cookies and ads</h2>
       <p className="mt-2">
         We use Google Ads tags to measure which ads bring enquiries. Google may use cookies for this. You can manage ad
-        settings in your Google account.
+        settings in your Google account. We also use Vercel Analytics and Microsoft Clarity to see how visitors use this page (pages viewed, scrolling and clicks) so we can improve it. Clarity hides what you type in forms.
       </p>
       <h2 className="mt-8 font-heading text-xl font-semibold text-navy">Removing your details</h2>
       <p className="mt-2">
