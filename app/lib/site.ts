@@ -99,6 +99,7 @@ export const HERO: Record<CourseKey, { h1: string; sub: string; title: string; i
     h1: "VLCC School of Beauty, Alambagh, Lucknow",
     sub: "Makeup, beautician, hair and nail courses with practical training and a certificate.",
     title: "VLCC School of Beauty Alambagh, Lucknow | Beauty Courses",
+    image: "/centre/classroom.jpg",
   },
 };
 

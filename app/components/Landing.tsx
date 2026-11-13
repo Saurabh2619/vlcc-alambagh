@@ -107,7 +107,7 @@ export default function Landing({ course }: { course: CourseKey }) {
                   <div className="mt-2 hidden flex-col gap-2 md:flex">
                     <p className="text-sm font-semibold text-white/80">Real work by our students</p>
                     <div className="flex gap-3">
-                      {work.slice(0, 3).map((w) => (
+                      {work.slice(0, course === "brand" ? 4 : 3).map((w) => (
                         <Image key={w.src} src={w.src} alt={`${w.course} work by a student at VLCC Alambagh`} width={112} height={140} className="h-36 w-28 rounded-xl object-cover ring-2 ring-white/70" />
                       ))}
                     </div>
@@ -192,17 +192,19 @@ export default function Landing({ course }: { course: CourseKey }) {
               </div>
             </div>
             <div className="flex flex-col gap-3 overflow-hidden rounded-3xl bg-navy p-7 text-white">
-              <figure className="mb-2">
-                <Image
-                  src={CENTRE_PHOTO}
-                  alt="Faculty and students at VLCC School of Beauty, Alambagh, Lucknow"
-                  width={1024}
-                  height={682}
-                  sizes="(min-width: 768px) 420px, 100vw"
-                  className="aspect-[3/2] h-auto w-full rounded-2xl object-cover"
-                />
-                <figcaption className="pt-3 text-sm text-white/75">Our faculty and students at the Alambagh centre</figcaption>
-              </figure>
+              {course !== "brand" && (
+                <figure className="mb-2">
+                  <Image
+                    src={CENTRE_PHOTO}
+                    alt="Faculty and students at VLCC School of Beauty, Alambagh, Lucknow"
+                    width={1024}
+                    height={682}
+                    sizes="(min-width: 768px) 420px, 100vw"
+                    className="aspect-[3/2] h-auto w-full rounded-2xl object-cover"
+                  />
+                  <figcaption className="pt-3 text-sm text-white/75">Our faculty and students at the Alambagh centre</figcaption>
+                </figure>
+              )}
               <p className="font-heading text-xl font-semibold">Get fees and batch details</p>
               <p className="text-white/80">Talk to our counsellor today. No obligation.</p>
               <a href="#lead-form" className="inline-flex min-h-12 items-center justify-center rounded-xl bg-orange px-5 font-bold text-white hover:bg-orange-dark">
