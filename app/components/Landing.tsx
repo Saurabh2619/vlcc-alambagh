@@ -487,24 +487,26 @@ export default function Landing({ course }: { course: CourseKey }) {
           <div className="mx-auto grid max-w-6xl gap-8 px-4 py-14 md:grid-cols-2">
             <div className="flex flex-col gap-4">
               <p className="text-sm font-semibold tracking-widest text-orange uppercase">Visit us</p>
-              <h2 className="-mt-3 font-heading text-2xl font-bold text-navy md:text-3xl">Visit our centre</h2>
+              <h2 className="-mt-3 font-heading text-2xl font-bold text-navy md:text-3xl">
+                {CITY.centres && CITY.centres.length > 1 ? "Visit our centres" : "Visit our centre"}
+              </h2>
               {CITY.centres && CITY.centres.length > 1 ? (
                 <div className="flex flex-col gap-3">
-                  <p className="text-ink-soft">We have {CITY.centres.length} centres in {CITY.city}. Visit the one nearest to you.</p>
+                  <p className="text-sm text-ink-soft md:text-base">We have {CITY.centres.length} centres in {CITY.city}. Visit the nearest one.</p>
                   {CITY.centres.map((c) => (
-                    <div key={c.name} className="rounded-2xl border border-line bg-white p-4">
-                      <p className="font-heading font-semibold text-navy">{c.name}</p>
-                      <p className="mt-1 flex gap-2 text-ink-soft">
-                        <PinIcon className="mt-1 h-4 w-4 shrink-0 text-orange" />
+                    <div key={c.name} className="rounded-2xl border border-line bg-white p-3 md:p-4">
+                      <p className="font-heading font-semibold text-navy">{c.name.replace(/^VLCC School of Beauty,\s*/, "")} centre</p>
+                      <p className="mt-1 flex gap-2 text-sm text-ink-soft md:text-base">
+                        <PinIcon className="mt-0.5 h-4 w-4 shrink-0 text-orange" />
                         <span>{c.address}</span>
                       </p>
-                      <div className="mt-3 flex flex-wrap gap-2">
+                      <div className="mt-3 grid grid-cols-2 gap-2">
                         {c.phone && (
-                          <a href={`tel:+91${c.phone}`} className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-orange px-4 text-sm font-semibold text-white hover:bg-orange-dark">
-                            <PhoneIcon className="h-4 w-4" /> Call {c.phone.replace(/(\d{5})(\d{5})/, "$1 $2")}
+                          <a href={`tel:+91${c.phone}`} className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl bg-orange px-3 text-sm font-semibold text-white hover:bg-orange-dark">
+                            <PhoneIcon className="h-4 w-4" /> Call<span className="hidden sm:inline"> {c.phone.replace(/(\d{5})(\d{5})/, "$1 $2")}</span>
                           </a>
                         )}
-                        <a href={c.mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 rounded-xl border-2 border-navy px-4 text-sm font-semibold text-navy hover:bg-navy hover:text-white">
+                        <a href={c.mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl border-2 border-navy px-3 text-sm font-semibold text-navy hover:bg-navy hover:text-white">
                           <PinIcon className="h-4 w-4" /> Directions
                         </a>
                       </div>
@@ -528,10 +530,12 @@ export default function Landing({ course }: { course: CourseKey }) {
                 </p>
               )}
               <div className="flex flex-wrap gap-3">
-                <a href={`tel:+91${SITE.phone}`} className="inline-flex min-h-12 items-center gap-2 rounded-xl bg-orange px-5 font-semibold text-white hover:bg-orange-dark">
-                  <PhoneIcon className="h-5 w-5" /> Call now
-                </a>
-                <a href={`https://wa.me/91${SITE.whatsapp}`} className="inline-flex min-h-12 items-center gap-2 rounded-xl bg-green px-5 font-semibold text-white">
+                {!(CITY.centres && CITY.centres.length > 1) && (
+                  <a href={`tel:+91${SITE.phone}`} className="inline-flex min-h-12 items-center gap-2 rounded-xl bg-orange px-5 font-semibold text-white hover:bg-orange-dark">
+                    <PhoneIcon className="h-5 w-5" /> Call now
+                  </a>
+                )}
+                <a href={`https://wa.me/91${SITE.whatsapp}`} className={`inline-flex min-h-12 items-center gap-2 rounded-xl bg-green px-5 font-semibold text-white ${CITY.centres && CITY.centres.length > 1 ? "w-full justify-center sm:w-auto" : ""}`}>
                   <WhatsAppIcon className="h-5 w-5" /> WhatsApp
                 </a>
                 {!(CITY.centres && CITY.centres.length > 1) && (
