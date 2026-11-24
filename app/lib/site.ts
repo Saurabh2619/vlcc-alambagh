@@ -53,7 +53,7 @@ export type CityCopy = {
   stats: { n: string; l: string }[]; // optional stats strip, empty = hidden
   pricing: Pricing; // fees, duration and offer shown near the form
   centresLabel: string; // e.g. "Alambagh centre"
-  centres?: { name: string; address: string; mapsUrl: string; phone?: string }[]; // set when the city has several centres
+  centres?: { name: string; address: string; mapsUrl: string; phone?: string; instagram?: string }[]; // set when the city has several centres
 };
 
 // Fees, duration and offer approved by the centre owner (24 Nov 2026). Edit these values to change every page.

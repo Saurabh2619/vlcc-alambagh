@@ -37,6 +37,14 @@ const CAREERS = [
   { icon: PinIcon, h: "Your own parlour", d: "Start a parlour or studio with the right skills." },
 ];
 
+// Instagram buttons: one per centre when the city has several centres, else the single page link.
+const INSTA: { href: string; label: string }[] =
+  CITY.centres && CITY.centres.length > 1
+    ? CITY.centres.filter((c) => c.instagram).map((c) => ({ href: c.instagram as string, label: c.name.replace(/^VLCC School of Beauty,\s*/, "") }))
+    : SITE.instagram
+      ? [{ href: SITE.instagram, label: "" }]
+      : [];
+
 const HERO_POINTS = ["Practical training on real models", "Certificate on completion", "Weekday and weekend batches"];
 
 // Fees, duration and offer (values live in app/lib/site.ts and app/lib/kanpur.ts). Shown right above the form.
@@ -353,16 +361,17 @@ export default function Landing({ course }: { course: CourseKey }) {
               <a href="#lead-form" className="mt-8 inline-flex min-h-12 items-center rounded-xl bg-orange px-6 font-bold text-white hover:bg-orange-dark">
                 Learn this at VLCC {CITY.short}
               </a>
-              {SITE.instagram && (
+              {INSTA.map((i) => (
                 <a
-                  href={SITE.instagram}
+                  key={i.href}
+                  href={i.href}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-3 inline-flex min-h-12 sm:mt-8 sm:ml-3 items-center gap-2 rounded-xl border-2 border-navy px-5 font-semibold text-navy hover:bg-navy hover:text-white"
                 >
-                  <InstagramIcon className="h-5 w-5" /> More on Instagram
+                  <InstagramIcon className="h-5 w-5" /> {i.label ? `Instagram: ${i.label}` : "More on Instagram"}
                 </a>
-              )}
+              ))}
             </div>
           </section>
         )}
@@ -619,11 +628,11 @@ export default function Landing({ course }: { course: CourseKey }) {
               <p>{SITE.address}</p>
             )}
             <a href={`tel:+91${SITE.phone}`} className="hover:text-white">+91 {SITE.phone}</a>
-            {SITE.instagram && (
-              <a href={SITE.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white">
-                <InstagramIcon className="h-4 w-4" /> {SITE.instagramHandle}
+            {INSTA.map((i) => (
+              <a key={i.href} href={i.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white">
+                <InstagramIcon className="h-4 w-4" /> {i.label ? `Instagram: ${i.label}` : SITE.instagramHandle}
               </a>
-            )}
+            ))}
             <Link href="/privacy" className="underline hover:text-white">Privacy policy</Link>
           </div>
         </div>
