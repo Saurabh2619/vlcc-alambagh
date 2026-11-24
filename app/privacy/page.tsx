@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SITE } from "../lib/site";
+import { CITY, SITE } from "../lib/site";
 
-export const metadata: Metadata = { title: "Privacy Policy | VLCC School of Beauty Alambagh" };
+export const metadata: Metadata = { title: `Privacy Policy | ${SITE.brand} ${CITY.short}` };
 
 export default function Privacy() {
   return (

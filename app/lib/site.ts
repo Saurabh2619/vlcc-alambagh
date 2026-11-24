@@ -1,6 +1,71 @@
 // All editable centre details live here. Fill the TODO values once PK ma'am confirms them.
+// This one codebase serves two sites. Alambagh (Lucknow) is the default.
+// Set NEXT_PUBLIC_CITY=kanpur on the vlcc-kanpur Vercel project to show the Kanpur content from ./kanpur.ts.
 
-export const SITE = {
+import {
+  KANPUR_COPY,
+  KANPUR_COURSE_PAGE,
+  KANPUR_COURSES,
+  KANPUR_HERO,
+  KANPUR_SITE,
+  KANPUR_WORK,
+} from "./kanpur";
+
+export type SiteInfo = {
+  brand: string;
+  centre: string;
+  phone: string;
+  whatsapp: string;
+  address: string;
+  instagram: string;
+  instagramHandle: string;
+  mapsUrl: string;
+  mapsEmbed: string;
+  timing: string;
+  certificate: string;
+};
+
+export type HeroInfo = { h1: string; sub: string; title: string; image?: string };
+export type CoursePageInfo = { label: string; about: string[]; desc: string; faqs: { q: string; a: string }[] };
+export type Pricing = { amount: string; unit: string; duration: string; offer: string; offerNote: string };
+
+// Text that is different for each centre but sits inside the shared page layout (Landing.tsx).
+export type CityCopy = {
+  short: string; // "Alambagh"
+  city: string; // "Lucknow"
+  landmark: string;
+  strip: string;
+  stripShort: string;
+  stripRight: string;
+  trust: { h: string; d: string };
+  visitStep: string;
+  why: string[];
+  whyIntro: string;
+  callback: string;
+  thanks: string;
+  logoAlt: string;
+  centrePhoto: string; // "" = no photo yet (section is hidden)
+  centreEntrance: string; // "" = no photo yet
+  entranceCaption: string;
+  metaDescription: string;
+  heroStyle: "classic" | "bold";
+  stickyBar: boolean; // mobile bottom bar with Call + Get callback
+  stats: { n: string; l: string }[]; // optional stats strip, empty = hidden
+  pricing: Pricing; // fees, duration and offer shown near the form
+  centresLabel: string; // e.g. "Alambagh centre"
+  centres?: { name: string; address: string; mapsUrl: string; phone?: string }[]; // set when the city has several centres
+};
+
+// Fees, duration and offer approved by the centre owner (24 Nov 2026). Edit these values to change every page.
+const ALAMBAGH_PRICING: Pricing = {
+  amount: "₹15,000",
+  unit: "/month",
+  duration: "2 to 3 months",
+  offer: "Up to 50% discount",
+  offerNote: "Terms apply. Details on the counselling call.",
+};
+
+const ALAMBAGH_SITE: SiteInfo = {
   brand: "VLCC School of Beauty",
   centre: "Alambagh, Lucknow",
   phone: "7755009597", // TODO: confirm call number
@@ -35,42 +100,42 @@ export type Course = {
   fees: string; // TODO: fill, e.g. "₹45,000" or leave empty to show "Ask on call"
 };
 
-export const COURSES: Course[] = [
+const ALAMBAGH_COURSES: Course[] = [
   {
     key: "makeup",
     name: "Makeup Artist",
     short: "Bridal, party and HD makeup with practice on real models.",
     learn: ["Skin prep and base", "Bridal and party looks", "HD and airbrush basics", "Hair styling for brides"],
-    duration: "",
-    fees: "",
+    duration: ALAMBAGH_PRICING.duration,
+    fees: `From ${ALAMBAGH_PRICING.amount}${ALAMBAGH_PRICING.unit}`,
   },
   {
     key: "parlour",
     name: "Beautician / Parlour",
     short: "Skin care, facials, threading, waxing and salon services.",
     learn: ["Facials and clean-ups", "Threading and waxing", "Manicure and pedicure", "Salon hygiene and client handling"],
-    duration: "",
-    fees: "",
+    duration: ALAMBAGH_PRICING.duration,
+    fees: `From ${ALAMBAGH_PRICING.amount}${ALAMBAGH_PRICING.unit}`,
   },
   {
     key: "hair",
     name: "Hair Styling",
     short: "Cuts, styling, colour and hair treatments.",
     learn: ["Basic and layer cuts", "Blow dry and styling", "Hair colour", "Spa and treatments"],
-    duration: "",
-    fees: "",
+    duration: ALAMBAGH_PRICING.duration,
+    fees: `From ${ALAMBAGH_PRICING.amount}${ALAMBAGH_PRICING.unit}`,
   },
   {
     key: "nail",
     name: "Nail Art",
     short: "Nail art, gel polish and extensions.",
     learn: ["Nail care basics", "Gel polish", "Nail extensions", "Nail art designs"],
-    duration: "",
-    fees: "",
+    duration: ALAMBAGH_PRICING.duration,
+    fees: `From ${ALAMBAGH_PRICING.amount}${ALAMBAGH_PRICING.unit}`,
   },
 ];
 
-export const HERO: Record<CourseKey, { h1: string; sub: string; title: string; image?: string }> = {
+const ALAMBAGH_HERO: Record<CourseKey, HeroInfo> = {
   makeup: {
     h1: "Makeup Artist Course in Alambagh, Lucknow",
     sub: "Learn bridal, party and HD makeup with hands-on practice on real models.",
@@ -105,10 +170,7 @@ export const HERO: Record<CourseKey, { h1: string; sub: string; title: string; i
 
 // Course-specific content: matches what people search on Google (better Quality Score, cheaper clicks).
 // TODO: replace "Ask our counsellor" answers with real fees/duration once confirmed.
-export const COURSE_PAGE: Record<
-  CourseKey,
-  { label: string; about: string[]; desc: string; faqs: { q: string; a: string }[] }
-> = {
+const ALAMBAGH_COURSE_PAGE: Record<CourseKey, CoursePageInfo> = {
   makeup: {
     label: "makeup artist course",
     desc: "Makeup artist course in Alambagh, Lucknow at VLCC School of Beauty. Bridal, party and HD makeup classes with practice on real models. Ask for fees and batch details.",
@@ -118,8 +180,8 @@ export const COURSE_PAGE: Record<
       "Makeup classes run in small batches. Fill the form to know the makeup course fees, duration and the next batch.",
     ],
     faqs: [
-      { q: "What are the makeup artist course fees?", a: "Fees depend on the level you choose (basic, advanced or professional bridal). Our counsellor shares the full fee structure and current offers on the call." },
-      { q: "How long is the makeup course?", a: "We have short and professional makeup courses. The counsellor will suggest the right duration for your goal." },
+      { q: "What are the makeup artist course fees?", a: `Fees start from ${ALAMBAGH_PRICING.amount}${ALAMBAGH_PRICING.unit} and depend on the level you choose (basic, advanced or professional bridal). Our counsellor shares the full fee structure and current offers on the call.` },
+      { q: "How long is the makeup course?", a: `Courses run for about ${ALAMBAGH_PRICING.duration}. The counsellor will suggest the right level for your goal.` },
       { q: "Can a beginner join the makeup course?", a: "Yes. The course starts from the basics of skin and products, so you do not need any experience." },
       { q: "Will I practise on real models?", a: "Yes. Practical sessions on real models are a core part of the course." },
       { q: "Can I work as a bridal makeup artist after this?", a: "The professional course covers bridal looks, so you can take bridal and party bookings or work with salons and studios." },
@@ -135,8 +197,8 @@ export const COURSE_PAGE: Record<
       "Whether you want a basic parlour course or a professional cosmetology programme, fill the form to know the beautician course fees and duration.",
     ],
     faqs: [
-      { q: "What are the beautician course fees?", a: "Fees depend on whether you take a basic parlour course or a professional programme. Our counsellor shares the exact fees on the call." },
-      { q: "How long is the beauty parlour course?", a: "Basic and advanced options are available. The counsellor will guide you on the duration that fits your goal." },
+      { q: "What are the beautician course fees?", a: `Fees start from ${ALAMBAGH_PRICING.amount}${ALAMBAGH_PRICING.unit} and depend on whether you take a basic parlour course or a professional programme. Our counsellor shares the exact fees on the call.` },
+      { q: "How long is the beauty parlour course?", a: `Courses run for about ${ALAMBAGH_PRICING.duration}. The counsellor will guide you on the level that fits your goal.` },
       { q: "What will I learn in the parlour course?", a: "Facials, clean-ups, threading, waxing, manicure, pedicure, basic makeup, hygiene and client handling." },
       { q: "Can I open my own parlour after this course?", a: "Yes. The course gives you the practical skills to work in a salon or start your own parlour." },
       { q: "Who can join?", a: "Beginners can join. The counsellor will confirm eligibility for each course level." },
@@ -152,8 +214,8 @@ export const COURSE_PAGE: Record<
       "Fill the form to know the hair styling course fees, duration and the next batch.",
     ],
     faqs: [
-      { q: "What are the hair styling course fees?", a: "Fees depend on the course level. Our counsellor shares the exact fees and current offers on the call." },
-      { q: "How long is the hairdressing course?", a: "Short and professional options are available. The counsellor will suggest the right one for you." },
+      { q: "What are the hair styling course fees?", a: `Fees start from ${ALAMBAGH_PRICING.amount}${ALAMBAGH_PRICING.unit} and depend on the course level. Our counsellor shares the exact fees and current offers on the call.` },
+      { q: "How long is the hairdressing course?", a: `Courses run for about ${ALAMBAGH_PRICING.duration}. The counsellor will suggest the right one for you.` },
       { q: "Will I learn haircutting and hair colour?", a: "Yes. Haircuts, styling, colouring and treatments are all covered with practical sessions." },
       { q: "Can a beginner join?", a: "Yes. The course starts from the basics, so no experience is needed." },
       { q: "Do I get a certificate?", a: "Yes, you receive a certificate after completing the course." },
@@ -168,8 +230,8 @@ export const COURSE_PAGE: Record<
       "Fill the form to know the nail course fees, duration and the next batch.",
     ],
     faqs: [
-      { q: "What are the nail art course fees?", a: "Fees depend on the course level. Our counsellor shares the exact fees on the call." },
-      { q: "How long is the nail extension course?", a: "Short and professional options are available. The counsellor will guide you." },
+      { q: "What are the nail art course fees?", a: `Fees start from ${ALAMBAGH_PRICING.amount}${ALAMBAGH_PRICING.unit} and depend on the course level. Our counsellor shares the exact fees on the call.` },
+      { q: "How long is the nail extension course?", a: `Courses run for about ${ALAMBAGH_PRICING.duration}. The counsellor will guide you.` },
       { q: "Are nail extensions included?", a: "Yes. Gel polish, nail extensions and nail art designs are part of the course." },
       { q: "Can a beginner join?", a: "Yes. No experience is needed." },
       { q: "Do I get a certificate?", a: "Yes, you receive a certificate after completing the course." },
@@ -186,7 +248,7 @@ export const COURSE_PAGE: Record<
     faqs: [
       { q: "Where is VLCC School of Beauty in Alambagh?", a: "We are opposite Phoenix Mall, Alambagh, Lucknow. Tap Directions below for the map." },
       { q: "Which courses are available at VLCC Alambagh?", a: "Makeup artist, beautician and parlour, hair styling and nail art courses." },
-      { q: "What are the course fees?", a: "Fees depend on the course and level. Our counsellor shares the full fee structure and current offers on the call." },
+      { q: "What are the course fees?", a: `Fees start from ${ALAMBAGH_PRICING.amount}${ALAMBAGH_PRICING.unit} and depend on the course and level. Our counsellor shares the full fee structure and current offers on the call.` },
       { q: "Do I get a certificate?", a: "Yes, you receive a certificate after completing the course." },
       { q: "Can I visit the centre before joining?", a: "Yes. Fill the form or call us and we will fix a time for your visit." },
     ],
@@ -195,16 +257,54 @@ export const COURSE_PAGE: Record<
 
 // Real photos of student work at VLCC Alambagh (processed copies live in public/work/<course>/).
 // To add more: put the new photo in public/work/<course>/ and add its path here.
-export const WORK: Record<Exclude<CourseKey, "brand">, string[]> = {
+const ALAMBAGH_WORK: Record<Exclude<CourseKey, "brand">, string[]> = {
   makeup: [8, 9, 4, 6, 7, 5, 1, 2, 3].map((n) => `/work/makeup/makeup-${n}.jpg`),
   hair: [6, 2, 7, 5, 1, 3, 4, 8].map((n) => `/work/hair/hair-${n}.jpg`),
   nail: [6, 1, 7, 3, 4, 2, 5].map((n) => `/work/nail/nail-${n}.jpg`),
   parlour: [1, 2, 3, 4, 5].map((n) => `/work/parlour/parlour-${n}.jpg`),
 };
 
-// Real photo of the Alambagh centre (faculty and students)
-export const CENTRE_PHOTO = "/centre/classroom.jpg";
-export const CENTRE_ENTRANCE = "/centre/entrance.jpg";
+// Text around the shared layout for the Alambagh site (kept exactly as it was before the Kanpur site existed).
+const ALAMBAGH_COPY: CityCopy = {
+  short: "Alambagh",
+  city: "Lucknow",
+  landmark: "Opposite Phoenix Mall",
+  strip: "Authorised VLCC School of Beauty centre, Alambagh, Lucknow",
+  stripShort: "Authorised VLCC centre, Alambagh",
+  stripRight: "Admissions open · Enquire for upcoming batches",
+  trust: { h: "Alambagh centre", d: "Opposite Phoenix Mall" },
+  visitStep: "See the classrooms and meet the trainers at Alambagh.",
+  why: [
+    "Trained faculty from the VLCC network",
+    "Most class time spent on practicals, not theory",
+    "Beginners welcome, no experience needed",
+    "Easy to reach in Alambagh, opposite Phoenix Mall",
+  ],
+  whyIntro: "VLCC has been a trusted name in beauty and wellness in India since 1989.",
+  callback: "Our counsellor will call you back, 9 AM to 9 PM.",
+  thanks: "Our counsellor will call you shortly (9 AM to 9 PM).",
+  logoAlt: "VLCC School of Beauty, Alambagh Lucknow",
+  // Real photos of the Alambagh centre (faculty and students)
+  centrePhoto: "/centre/classroom.jpg",
+  centreEntrance: "/centre/entrance.jpg",
+  entranceCaption: "Our centre is opposite Phoenix Mall, Alambagh. Come and see our classes in person.",
+  metaDescription: "Makeup, beautician, hair and nail courses at VLCC School of Beauty, Alambagh, Lucknow. Practical training and certificate.",
+  heroStyle: "classic",
+  stickyBar: false,
+  stats: [],
+  pricing: ALAMBAGH_PRICING,
+  centresLabel: "Alambagh centre",
+};
+
+// Pick the site by the NEXT_PUBLIC_CITY env var (inlined at build time, so each Vercel project builds its own city).
+export const IS_KANPUR = process.env.NEXT_PUBLIC_CITY === "kanpur";
+
+export const SITE: SiteInfo = IS_KANPUR ? KANPUR_SITE : ALAMBAGH_SITE;
+export const COURSES: Course[] = IS_KANPUR ? KANPUR_COURSES : ALAMBAGH_COURSES;
+export const HERO: Record<CourseKey, HeroInfo> = IS_KANPUR ? KANPUR_HERO : ALAMBAGH_HERO;
+export const COURSE_PAGE: Record<CourseKey, CoursePageInfo> = IS_KANPUR ? KANPUR_COURSE_PAGE : ALAMBAGH_COURSE_PAGE;
+export const WORK: Record<Exclude<CourseKey, "brand">, string[]> = IS_KANPUR ? KANPUR_WORK : ALAMBAGH_WORK;
+export const CITY: CityCopy = IS_KANPUR ? KANPUR_COPY : ALAMBAGH_COPY;
 
 export function workFor(course: CourseKey): { src: string; course: string }[] {
   const names = { makeup: "Makeup", hair: "Hair styling", nail: "Nail art", parlour: "Beautician" } as const;

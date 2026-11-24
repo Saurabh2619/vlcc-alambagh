@@ -40,6 +40,7 @@ export async function POST(request: Request) {
     name,
     phone,
     course,
+    centre: ["Kakadeo", "Kidwai Nagar"].includes(String(body.centre)) ? String(body.centre) : "",
     page: clip(body.page),
     gclid: clip(body.gclid, 200),
     keyword: clip(body.keyword),

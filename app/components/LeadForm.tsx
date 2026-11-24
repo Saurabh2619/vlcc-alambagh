@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { COURSES, GADS, SITE, type CourseKey } from "@/app/lib/site";
+import { CITY, COURSES, GADS, SITE, type CourseKey } from "@/app/lib/site";
 import { WhatsAppIcon } from "./Icons";
 
 declare global {
@@ -34,9 +34,11 @@ export default function LeadForm({ course, id = "lead-form" }: { course: CourseK
     const name = String(form.get("name") || "").trim();
     const phone = cleanPhone(String(form.get("phone") || ""));
     const selected = String(form.get("course") || course);
+    const centre = String(form.get("centre") || "");
 
     if (name.length < 2) return setError("Please enter your name.");
     if (!PHONE_RE.test(phone) || FAKE_RE.test(phone)) return setError("Please enter a valid 10 digit mobile number.");
+    if (CITY.centres && CITY.centres.length > 1 && !centre) return setError("Please select your nearest centre.");
     setError("");
     setStatus("sending");
 
@@ -49,6 +51,7 @@ export default function LeadForm({ course, id = "lead-form" }: { course: CourseK
           name,
           phone,
           course: selected,
+          centre,
           website: String(form.get("website") || ""), // honeypot, must stay empty
           elapsed: startedAt.current ? Date.now() - startedAt.current : 0,
           page: window.location.pathname,
@@ -74,7 +77,7 @@ export default function LeadForm({ course, id = "lead-form" }: { course: CourseK
     return (
       <div role="status" className="flex flex-col gap-4 text-center">
         <p className="font-heading text-2xl font-semibold text-navy">Thank you!</p>
-        <p className="text-ink-soft">Our counsellor will call you shortly (9 AM to 9 PM).</p>
+        <p className="text-ink-soft">{CITY.thanks}</p>
         <a
           href={`https://wa.me/91${SITE.whatsapp}?text=${msg}`}
           className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-green px-5 font-semibold text-white"
@@ -125,6 +128,24 @@ export default function LeadForm({ course, id = "lead-form" }: { course: CourseK
           <option value="brand">Not sure yet</option>
         </select>
       </div>
+
+      {CITY.centres && CITY.centres.length > 1 && (
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor={`${id}-centre`} className="text-sm font-semibold">Nearest centre</label>
+          <select
+            id={`${id}-centre`}
+            name="centre"
+            defaultValue=""
+            className="min-h-12 rounded-xl border border-line bg-white px-3 text-base outline-none focus:border-navy focus:ring-2 focus:ring-navy/20"
+          >
+            <option value="" disabled>Select your centre</option>
+            {CITY.centres.map((c) => {
+              const label = c.name.replace(/^VLCC School of Beauty,\s*/, "");
+              return <option key={label} value={label}>{label}</option>;
+            })}
+          </select>
+        </div>
+      )}
 
       {/* Honeypot: hidden from people, bots fill it */}
       <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">

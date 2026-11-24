@@ -1,20 +1,21 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Inter, Poppins } from "next/font/google";
-import { GADS, HERO } from "./lib/site";
+import { CITY, GADS, HERO, IS_KANPUR } from "./lib/site";
 import ContactTracker from "./components/ContactTracker";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 // Microsoft Clarity (session recordings + heatmaps). Set NEXT_PUBLIC_CLARITY_ID in Vercel.
-const CLARITY_ID = process.env.NEXT_PUBLIC_CLARITY_ID || "zcxl4lms79";
+// The default id belongs to the Alambagh Clarity project, so the Kanpur site stays off Clarity until it gets its own id.
+const CLARITY_ID = process.env.NEXT_PUBLIC_CLARITY_ID || (IS_KANPUR ? "" : "zcxl4lms79");
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 const poppins = Poppins({ variable: "--font-poppins", subsets: ["latin"], weight: ["500", "600", "700"] });
 
 export const metadata: Metadata = {
   title: HERO.brand.title,
-  description: "Makeup, beautician, hair and nail courses at VLCC School of Beauty, Alambagh, Lucknow. Practical training and certificate.",
+  description: CITY.metaDescription,
   robots: { index: false, follow: false }, // ads landing page: keep out of Google search
 };
 
