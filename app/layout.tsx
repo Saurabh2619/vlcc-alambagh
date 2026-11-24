@@ -8,7 +8,7 @@ import "./globals.css";
 
 // Microsoft Clarity (session recordings + heatmaps). Set NEXT_PUBLIC_CLARITY_ID in Vercel.
 // The default id belongs to the Alambagh Clarity project, so the Kanpur site stays off Clarity until it gets its own id.
-const CLARITY_ID = process.env.NEXT_PUBLIC_CLARITY_ID || (IS_KANPUR ? "" : "zcxl4lms79");
+const CLARITY_ID = process.env.NEXT_PUBLIC_CLARITY_ID || (IS_KANPUR ? "zismhgg0rl" : "zcxl4lms79");
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 const poppins = Poppins({ variable: "--font-poppins", subsets: ["latin"], weight: ["500", "600", "700"] });
