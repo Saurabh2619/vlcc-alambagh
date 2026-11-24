@@ -68,32 +68,32 @@ export const KANPUR_COURSES: Course[] = [
 export const KANPUR_HERO: Record<CourseKey, HeroInfo> = {
   makeup: {
     h1: "Makeup Artist Course in Kanpur",
-    sub: "Learn bridal, party, airbrush and media makeup at VLCC School of Beauty, Kakadeo.",
-    title: "Makeup Artist Course in Kanpur | VLCC School of Beauty Kakadeo",
+    sub: "Learn bridal, party, airbrush and media makeup at VLCC School of Beauty, Kanpur.",
+    title: "Makeup Artist Course in Kanpur | VLCC School of Beauty Kanpur",
     image: "/hero-kanpur/makeup.jpg",
   },
   parlour: {
     h1: "Beautician and Parlour Course in Kanpur",
-    sub: "Learn skin care, hair, makeup and nails in one professional course at VLCC Kakadeo.",
-    title: "Beautician & Parlour Course in Kanpur | VLCC School of Beauty Kakadeo",
+    sub: "Learn skin care, hair, makeup and nails in one professional course at VLCC Kanpur.",
+    title: "Beautician & Parlour Course in Kanpur | VLCC School of Beauty Kanpur",
     image: "/hero-kanpur/parlour.jpg",
   },
   hair: {
     h1: "Hair Styling Course in Kanpur",
-    sub: "Learn haircuts, styling, colouring and treatments with practical sessions at VLCC Kakadeo.",
-    title: "Hair Styling Course in Kanpur | VLCC School of Beauty Kakadeo",
+    sub: "Learn haircuts, styling, colouring and treatments with practical sessions at VLCC Kanpur.",
+    title: "Hair Styling Course in Kanpur | VLCC School of Beauty Kanpur",
     image: "/hero-kanpur/hair.jpg",
   },
   nail: {
     h1: "Nail Art and Extension Course in Kanpur",
-    sub: "Learn gel, acrylic and 2D/3D nail art with hands-on practice at VLCC Kakadeo.",
-    title: "Nail Art Course in Kanpur | VLCC School of Beauty Kakadeo",
+    sub: "Learn gel, acrylic and 2D/3D nail art with hands-on practice at VLCC Kanpur.",
+    title: "Nail Art Course in Kanpur | VLCC School of Beauty Kanpur",
     image: "/hero-kanpur/nail.jpg",
   },
   brand: {
-    h1: "VLCC School of Beauty, Kakadeo, Kanpur",
+    h1: "VLCC School of Beauty, Kanpur",
     sub: "Makeup, beautician, hair and nail courses with practical training and a certificate.",
-    title: "VLCC School of Beauty Kanpur, Kakadeo | Beauty Courses",
+    title: "VLCC School of Beauty Kanpur | Kakadeo and Kidwai Nagar | Beauty Courses",
     image: "/hero-kanpur/home.jpg",
   },
 };
@@ -101,11 +101,11 @@ export const KANPUR_HERO: Record<CourseKey, HeroInfo> = {
 export const KANPUR_COURSE_PAGE: Record<CourseKey, CoursePageInfo> = {
   makeup: {
     label: "makeup artist course",
-    desc: "Makeup artist course in Kanpur at VLCC School of Beauty, Kakadeo. Bridal, party, airbrush and media makeup programs with hands-on practice. Ask for fees and batches.",
+    desc: "Makeup artist course in Kanpur at VLCC School of Beauty, Kanpur. Bridal, party, airbrush and media makeup programs with hands-on practice. Ask for fees and batches.",
     about: [
-      "The makeup artist course at VLCC School of Beauty, Kakadeo, Kanpur is a practical makeup academy programme for beginners and for anyone who wants to work as a professional makeup artist in Kanpur.",
+      "The makeup artist course at VLCC School of Beauty, Kanpur is a practical makeup academy programme for beginners and for anyone who wants to work as a professional makeup artist in Kanpur.",
       "Choose from beginner programs to advanced options such as airbrush makeup, semi-permanent makeup, special effects and international media makeup. Classes mix theory with hands-on practice.",
-      "Our centre is at Bhadauria Chauraha, Kakadeo. Fill the form to know the makeup course fees, duration and the next batch.",
+      "Visit our Kakadeo or Kidwai Nagar centre, whichever is nearer to you. Fill the form to know the makeup course fees, duration and the next batch.",
     ],
     faqs: [
       { q: "What are the makeup artist course fees in Kanpur?", a: `Fees start from ${KANPUR_PRICING.amount}${KANPUR_PRICING.unit} and depend on the program you choose, from beginner to advanced. Our counsellor shares the full fee structure and current offers on the call.` },
@@ -118,9 +118,9 @@ export const KANPUR_COURSE_PAGE: Record<CourseKey, CoursePageInfo> = {
   },
   parlour: {
     label: "beautician course",
-    desc: "Beautician and beauty parlour course in Kanpur at VLCC School of Beauty, Kakadeo. Skin, hair, makeup and nail training. Ask for fees and batch details.",
+    desc: "Beautician and beauty parlour course in Kanpur at VLCC School of Beauty, Kanpur. Skin, hair, makeup and nail training. Ask for fees and batch details.",
     about: [
-      "The beautician course at VLCC School of Beauty, Kakadeo, Kanpur covers what you need to work in a beauty parlour or start your own: skin care, facials, waxing and threading, hair, makeup, manicure and pedicure.",
+      "The beautician course at VLCC School of Beauty, Kanpur covers what you need to work in a beauty parlour or start your own: skin care, facials, waxing and threading, hair, makeup, manicure and pedicure.",
       "It is a professional parlour course with practical training, so you practise every service under trained faculty along with hygiene and client handling.",
       "Whether you want a basic parlour course or a professional cosmetology programme, fill the form to know the beautician course fees and duration in Kanpur.",
     ],
@@ -135,9 +135,9 @@ export const KANPUR_COURSE_PAGE: Record<CourseKey, CoursePageInfo> = {
   },
   hair: {
     label: "hair styling course",
-    desc: "Hair styling and hairdressing course in Kanpur at VLCC School of Beauty, Kakadeo. Haircuts, styling, colour and treatments with practical training. Ask for fees.",
+    desc: "Hair styling and hairdressing course in Kanpur at VLCC School of Beauty, Kanpur. Haircuts, styling, colour and treatments with practical training. Ask for fees.",
     about: [
-      "The hair styling course at VLCC School of Beauty, Kakadeo, Kanpur is a practical hairdressing programme for anyone who wants to work in a salon or as a freelance hair stylist.",
+      "The hair styling course at VLCC School of Beauty, Kanpur is a practical hairdressing programme for anyone who wants to work in a salon or as a freelance hair stylist.",
       "You learn haircutting, styling, colouring and hair care treatments, from beginner programs to advanced options such as VLCC Signature Pro Advanced Hair Styling.",
       "Fill the form to know the hair styling course fees, duration and the next batch in Kanpur.",
     ],
@@ -151,9 +151,9 @@ export const KANPUR_COURSE_PAGE: Record<CourseKey, CoursePageInfo> = {
   },
   nail: {
     label: "nail art course",
-    desc: "Nail art and nail extension course in Kanpur at VLCC School of Beauty, Kakadeo. Gel, acrylic and 2D/3D nail art with hands-on practice. 54 hr and 144 hr programs.",
+    desc: "Nail art and nail extension course in Kanpur at VLCC School of Beauty, Kanpur. Gel, acrylic and 2D/3D nail art with hands-on practice. 54 hr and 144 hr programs.",
     about: [
-      "The nail art course at VLCC School of Beauty, Kakadeo, Kanpur teaches nail care, gel and acrylic nail extensions, gel polish and 2D and 3D nail art.",
+      "The nail art course at VLCC School of Beauty, Kanpur teaches nail care, gel and acrylic nail extensions, gel polish and 2D and 3D nail art.",
       "Choose the 54 hour Beginner Program or the 144 hour Comprehensive Program. Both are open to students who have appeared in 8th class.",
       "Fill the form to know the nail course fees and the next batch in Kanpur.",
     ],
@@ -167,15 +167,15 @@ export const KANPUR_COURSE_PAGE: Record<CourseKey, CoursePageInfo> = {
   },
   brand: {
     label: "beauty course",
-    desc: "VLCC School of Beauty, Kakadeo, Kanpur. Makeup, beautician, hair and nail courses with practical training and certificate. Bhadauria Chauraha, opposite IndianOil.",
+    desc: "VLCC School of Beauty, Kanpur. Makeup, beautician, hair and nail courses with practical training and certificate. Two centres: Kakadeo and Kidwai Nagar.",
     about: [
-      "VLCC School of Beauty, Kakadeo is the VLCC beauty institute at Bhadauria Chauraha in Kanpur, offering makeup artist, beautician, hair styling and nail art courses.",
+      "VLCC School of Beauty has two centres in Kanpur, Kakadeo and Kidwai Nagar, offering makeup artist, beautician, hair styling and nail art courses.",
       "Every course is practical, taught by trained faculty, and you receive a certificate on completion. VLCC has trained over 1 lakh students and has a dedicated placement cell.",
-      "Fill the form to know the course fees, duration and the next batch at our Kakadeo centre.",
+      "Fill the form to know the course fees, duration and the next batch at our Kakadeo or Kidwai Nagar centre.",
     ],
     faqs: [
-      { q: "Where is VLCC School of Beauty in Kanpur?", a: "We are on the 3rd Floor, Petrol Pump, Plot No 117/N/115, Bhadauria Chauraha, opposite IndianOil, Kakadeo, Kanpur 208025. Tap Directions below for the map." },
-      { q: "Which courses are available at VLCC Kakadeo?", a: "Makeup artist, beautician and parlour, hair styling and nail art courses." },
+      { q: "Where is VLCC School of Beauty in Kanpur?", a: "We have two centres in Kanpur. Kakadeo: 3rd Floor, Petrol Pump, Plot No 117/N/115, Bhadauria Chauraha, opposite IndianOil, 208025. Kidwai Nagar: Second Floor, 543/58, above Pandey Book Sellers, 208011. Tap Directions below for the map." },
+      { q: "Which courses are available at VLCC Kanpur?", a: "Makeup artist, beautician and parlour, hair styling and nail art courses." },
       { q: "What are the course fees?", a: `Fees start from ${KANPUR_PRICING.amount}${KANPUR_PRICING.unit} and depend on the course and level. Our counsellor shares the full fee structure and current offers on the call.` },
       { q: "Do I get a certificate?", a: "Yes, you receive a VLCC certificate after completing the course." },
       { q: "Can I visit the centre before joining?", a: "Yes. Fill the form or call us and we will fix a time for your visit." },
@@ -197,7 +197,7 @@ export const KANPUR_WORK: Record<Exclude<CourseKey, "brand">, string[]> = {
 };
 
 export const KANPUR_COPY: CityCopy = {
-  short: "Kakadeo",
+  short: "Kanpur",
   city: "Kanpur",
   landmark: "Kakadeo and Kidwai Nagar, Kanpur",
   strip: "Authorised VLCC School of Beauty centres, Kakadeo & Kidwai Nagar, Kanpur",
@@ -214,11 +214,11 @@ export const KANPUR_COPY: CityCopy = {
   whyIntro: "VLCC has trained over 1 lakh students and is a trusted name in beauty and wellness training in India.",
   callback: "Our counsellor will call you back shortly.",
   thanks: "Our counsellor will call you shortly.",
-  logoAlt: "VLCC School of Beauty, Kakadeo Kanpur",
+  logoAlt: "VLCC School of Beauty, Kanpur",
   centrePhoto: "/centre-kanpur/classroom.jpg", // students with their VLCC certificates (Kakadeo)
   centreEntrance: "", // TODO: add a real entrance photo
-  entranceCaption: "Our centre is at Bhadauria Chauraha, opposite IndianOil, Kakadeo. Come and see our classes in person.",
-  metaDescription: "Makeup, beautician, hair and nail courses at VLCC School of Beauty, Kakadeo, Kanpur. Practical training and certificate.",
+  entranceCaption: "Visit the Kakadeo or Kidwai Nagar centre and see our classes in person.",
+  metaDescription: "Makeup, beautician, hair and nail courses at VLCC School of Beauty, Kanpur (Kakadeo and Kidwai Nagar). Practical training and certificate.",
   pricing: KANPUR_PRICING,
   centresLabel: "Kakadeo and Kidwai Nagar centres",
   // Both Kanpur centres are shown; people go to the one nearest to them.

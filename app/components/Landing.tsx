@@ -37,6 +37,12 @@ const CAREERS = [
   { icon: PinIcon, h: "Your own parlour", d: "Start a parlour or studio with the right skills." },
 ];
 
+// Cities with several centres (Kanpur): Call and WhatsApp let the visitor pick the centre.
+const MULTI = !!CITY.centres && CITY.centres.length > 1;
+const CENTRE_LIST = (CITY.centres ?? [])
+  .filter((c) => c.phone)
+  .map((c) => ({ label: c.name.replace(/^VLCC School of Beauty,\s*/, ""), phone: c.phone as string }));
+
 // Instagram buttons: one per centre when the city has several centres, else the single page link.
 const INSTA: { href: string; label: string }[] =
   CITY.centres && CITY.centres.length > 1
@@ -86,7 +92,7 @@ export default function Landing({ course }: { course: CourseKey }) {
   const bold = !hero.image && CITY.heroStyle === "bold";
   // Kanpur: same photo banner as Alambagh, plus the "Admissions open" chip, counselling ribbon and stats strip.
   const emphasis = CITY.heroStyle === "bold";
-  const place = `${CITY.short}, ${CITY.city}`;
+  const place = CITY.short === CITY.city ? CITY.city : `${CITY.short}, ${CITY.city}`;
   // The scrolling photo row needs enough photos to fill the screen. With only a few photos, repeat them
   // (5 or more photos are used as they are, so the Alambagh row does not change).
   const rowPhotos = work.length >= 5 || work.length === 0 ? work : Array.from({ length: Math.ceil(6 / work.length) }, () => work).flat();
@@ -111,13 +117,28 @@ export default function Landing({ course }: { course: CourseKey }) {
           <a href="#top" aria-label={CITY.logoAlt} className="shrink-0">
             <Image src="/vlcc-logo-lko.webp" alt={CITY.logoAlt} width={200} height={83} priority className="h-10 w-auto md:h-14" />
           </a>
-          <a
-            href={`tel:+91${SITE.phone}`}
-            className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-orange px-3 text-sm font-semibold text-white hover:bg-orange-dark md:px-4 md:text-base"
-          >
-            <PhoneIcon className="h-5 w-5" />
-            <span className="hidden sm:inline">Call</span> {SITE.phone.replace(/(\d{5})(\d{5})/, "$1 $2")}
-          </a>
+          {MULTI ? (
+            <div className="flex gap-2">
+              {CENTRE_LIST.map((c) => (
+                <a
+                  key={c.label}
+                  href={`tel:+91${c.phone}`}
+                  className="inline-flex min-h-11 items-center gap-1.5 rounded-xl bg-orange px-2.5 text-xs font-semibold text-white hover:bg-orange-dark sm:px-4 sm:text-sm md:text-base"
+                >
+                  <PhoneIcon className="h-4 w-4 shrink-0 sm:h-5 sm:w-5" />
+                  <span className="hidden sm:inline">Call</span> {c.label}
+                </a>
+              ))}
+            </div>
+          ) : (
+            <a
+              href={`tel:+91${SITE.phone}`}
+              className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-orange px-3 text-sm font-semibold text-white hover:bg-orange-dark md:px-4 md:text-base"
+            >
+              <PhoneIcon className="h-5 w-5" />
+              <span className="hidden sm:inline">Call</span> {SITE.phone.replace(/(\d{5})(\d{5})/, "$1 $2")}
+            </a>
+          )}
         </div>
       </header>
 
@@ -319,9 +340,19 @@ export default function Landing({ course }: { course: CourseKey }) {
               <a href="#lead-form" className="inline-flex min-h-12 items-center justify-center rounded-xl bg-orange px-5 font-bold text-white hover:bg-orange-dark">
                 Get a callback
               </a>
-              <a href={`tel:+91${SITE.phone}`} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border-2 border-white/40 px-5 font-semibold text-white hover:bg-white/10">
-                <PhoneIcon className="h-5 w-5" /> Call {SITE.phone}
-              </a>
+              {MULTI ? (
+                <div className="grid grid-cols-2 gap-2">
+                  {CENTRE_LIST.map((c) => (
+                    <a key={c.label} href={`tel:+91${c.phone}`} className="inline-flex min-h-12 items-center justify-center gap-1.5 rounded-xl border-2 border-white/40 px-2 text-sm font-semibold text-white hover:bg-white/10">
+                      <PhoneIcon className="h-4 w-4 shrink-0" /> Call {c.label}
+                    </a>
+                  ))}
+                </div>
+              ) : (
+                <a href={`tel:+91${SITE.phone}`} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border-2 border-white/40 px-5 font-semibold text-white hover:bg-white/10">
+                  <PhoneIcon className="h-5 w-5" /> Call {SITE.phone}
+                </a>
+              )}
             </div>
           </div>
         </section>
@@ -529,21 +560,19 @@ export default function Landing({ course }: { course: CourseKey }) {
                   {SITE.timing}
                 </p>
               )}
-              <div className="flex flex-wrap gap-3">
-                {!(CITY.centres && CITY.centres.length > 1) && (
+              {!MULTI && (
+                <div className="flex flex-wrap gap-3">
                   <a href={`tel:+91${SITE.phone}`} className="inline-flex min-h-12 items-center gap-2 rounded-xl bg-orange px-5 font-semibold text-white hover:bg-orange-dark">
                     <PhoneIcon className="h-5 w-5" /> Call now
                   </a>
-                )}
-                <a href={`https://wa.me/91${SITE.whatsapp}`} className={`inline-flex min-h-12 items-center gap-2 rounded-xl bg-green px-5 font-semibold text-white ${CITY.centres && CITY.centres.length > 1 ? "w-full justify-center sm:w-auto" : ""}`}>
-                  <WhatsAppIcon className="h-5 w-5" /> WhatsApp
-                </a>
-                {!(CITY.centres && CITY.centres.length > 1) && (
+                  <a href={`https://wa.me/91${SITE.whatsapp}`} className="inline-flex min-h-12 items-center gap-2 rounded-xl bg-green px-5 font-semibold text-white">
+                    <WhatsAppIcon className="h-5 w-5" /> WhatsApp
+                  </a>
                   <a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center gap-2 rounded-xl border-2 border-navy px-5 font-semibold text-navy hover:bg-navy hover:text-white">
                     <PinIcon className="h-5 w-5" /> Directions
                   </a>
-                )}
-              </div>
+                </div>
+              )}
               {CITY.centreEntrance && (
                 <figure className="mt-2 flex items-center gap-4">
                   <Image
@@ -626,12 +655,20 @@ export default function Landing({ course }: { course: CourseKey }) {
               CITY.centres.map((c) => (
                 <p key={c.name}>
                   <span className="font-semibold text-white">{c.name}:</span> {c.address}
+                  {c.phone && (
+                    <>
+                      {" "}
+                      <a href={`tel:+91${c.phone}`} className="whitespace-nowrap underline hover:text-white">+91 {c.phone}</a>
+                    </>
+                  )}
                 </p>
               ))
             ) : (
-              <p>{SITE.address}</p>
+              <>
+                <p>{SITE.address}</p>
+                <a href={`tel:+91${SITE.phone}`} className="hover:text-white">+91 {SITE.phone}</a>
+              </>
             )}
-            <a href={`tel:+91${SITE.phone}`} className="hover:text-white">+91 {SITE.phone}</a>
             {INSTA.map((i) => (
               <a key={i.href} href={i.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white">
                 <InstagramIcon className="h-4 w-4" /> {i.label ? `Instagram: ${i.label}` : SITE.instagramHandle}
@@ -658,7 +695,8 @@ export default function Landing({ course }: { course: CourseKey }) {
         </div>
       )}
 
-      {/* Floating WhatsApp (mobile + desktop) */}
+      {/* Floating WhatsApp (mobile + desktop): one tap opens WhatsApp. Kanpur uses the main (Kakadeo) number;
+          the two Kanpur centres share leads, so no centre picker is needed. */}
       <a
         href={`https://wa.me/91${SITE.whatsapp}`}
         aria-label="Chat on WhatsApp"
