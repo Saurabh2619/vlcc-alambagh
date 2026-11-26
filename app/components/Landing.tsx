@@ -93,6 +93,15 @@ export default function Landing({ course }: { course: CourseKey }) {
   // Kanpur: same photo banner as Alambagh, plus the "Admissions open" chip, counselling ribbon and stats strip.
   const emphasis = CITY.heroStyle === "bold";
   const place = CITY.short === CITY.city ? CITY.city : `${CITY.short}, ${CITY.city}`;
+  // WhatsApp opens with this message already typed; the visitor only presses Send.
+  // It tells the centre that the chat came from the website and which course page.
+  const courseName = COURSES.find((c) => c.key === course)?.name;
+  const waText = encodeURIComponent(
+    courseName
+      ? `Hi, I saw your website. Please share fees and batch details for the ${courseName} course.`
+      : "Hi, I saw your website. Please share course details and fees.",
+  );
+  const waLink = `https://wa.me/91${SITE.whatsapp}?text=${waText}`;
   // The scrolling photo row needs enough photos to fill the screen. With only a few photos, repeat them
   // (5 or more photos are used as they are, so the Alambagh row does not change).
   const rowPhotos = work.length >= 5 || work.length === 0 ? work : Array.from({ length: Math.ceil(6 / work.length) }, () => work).flat();
@@ -537,7 +546,12 @@ export default function Landing({ course }: { course: CourseKey }) {
                             <PhoneIcon className="h-4 w-4" /> Call<span className="hidden sm:inline"> {c.phone.replace(/(\d{5})(\d{5})/, "$1 $2")}</span>
                           </a>
                         )}
-                        <a href={c.mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl border-2 border-navy px-3 text-sm font-semibold text-navy hover:bg-navy hover:text-white">
+                        {c.phone && (
+                          <a href={`https://wa.me/91${c.phone}?text=${waText}`} className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl bg-green px-3 text-sm font-semibold text-white">
+                            <WhatsAppIcon className="h-4 w-4" /> WhatsApp
+                          </a>
+                        )}
+                        <a href={c.mapsUrl} target="_blank" rel="noopener noreferrer" className="col-span-2 inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl border-2 border-navy px-3 text-sm font-semibold text-navy hover:bg-navy hover:text-white">
                           <PinIcon className="h-4 w-4" /> Directions
                         </a>
                       </div>
@@ -565,7 +579,7 @@ export default function Landing({ course }: { course: CourseKey }) {
                   <a href={`tel:+91${SITE.phone}`} className="inline-flex min-h-12 items-center gap-2 rounded-xl bg-orange px-5 font-semibold text-white hover:bg-orange-dark">
                     <PhoneIcon className="h-5 w-5" /> Call now
                   </a>
-                  <a href={`https://wa.me/91${SITE.whatsapp}`} className="inline-flex min-h-12 items-center gap-2 rounded-xl bg-green px-5 font-semibold text-white">
+                  <a href={waLink} className="inline-flex min-h-12 items-center gap-2 rounded-xl bg-green px-5 font-semibold text-white">
                     <WhatsAppIcon className="h-5 w-5" /> WhatsApp
                   </a>
                   <a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center gap-2 rounded-xl border-2 border-navy px-5 font-semibold text-navy hover:bg-navy hover:text-white">
@@ -698,7 +712,7 @@ export default function Landing({ course }: { course: CourseKey }) {
       {/* Floating WhatsApp (mobile + desktop): one tap opens WhatsApp. Kanpur uses the main (Kakadeo) number;
           the two Kanpur centres share leads, so no centre picker is needed. */}
       <a
-        href={`https://wa.me/91${SITE.whatsapp}`}
+        href={waLink}
         aria-label="Chat on WhatsApp"
         className={`fixed right-4 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_6px_20px_rgba(37,211,102,0.45)] transition hover:scale-105 md:right-6 md:bottom-6 md:h-16 md:w-16 ${CITY.stickyBar ? "bottom-20" : "bottom-4"}`}
       >
